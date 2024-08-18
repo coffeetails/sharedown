@@ -1,21 +1,28 @@
 <script>
-	import Header from './Header.svelte';
+	import githubImg from '$lib/images/github.svg'
 	import '../app.css';
 </script>
 
 <div class="app">
-	<Header />
+	<a href="https://github.com/coffeetails"><img src={githubImg} alt="github logo" /></a>
+	<header>
+		<p>This is a markdown paster for easy and anonymous sharing and <strong>anyone</strong> with the link will be able to access and share your text.</p>
+	</header>
 
 	<main>
 		<slot />
 	</main>
 
-	<!-- <footer>
-		<p>visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to learn SvelteKit</p>
-	</footer> -->
 </div>
 
 <style>
+	img {
+		position: absolute;
+		top: 0.25rem;
+		right: 0.5rem;
+		height: 2rem;
+	}
+
 	.app {
 		display: flex;
 		flex-direction: column;
@@ -29,25 +36,36 @@
 		padding: 1rem;
 		width: 100%;
 		max-width: 64rem;
-		margin: 0 auto;
+		margin: 3rem auto;
 		box-sizing: border-box;
 	}
 
-	footer {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		padding: 12px;
+	header {
+		position: relative;
+		background-color: #fafafa;
+		padding: 0.5rem;
+		margin: 0 auto;
+		font-size: 0.8rem;
+	}
+	header::before {
+		content: " ";
+		position: absolute;
+		left: -1rem;
+		top: 0;
+		height: 100%;
+		width: 1rem;
+		border-bottom-left-radius: 100%;
+		background-color: #fafafa;
+	}
+	header::after {
+		content: " ";
+		position: absolute;
+		right: -1rem;
+		top: 0;
+		height: 100%;
+		width: 1rem;
+		border-bottom-right-radius: 100%;
+		background-color: #fafafa;
 	}
 
-	footer a {
-		font-weight: bold;
-	}
-
-	@media (min-width: 480px) {
-		footer {
-			padding: 12px 0;
-		}
-	}
 </style>

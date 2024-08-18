@@ -1,45 +1,29 @@
 <script lang="ts">
-    import type { json } from '@sveltejs/kit';
+    import { supabase } from '$lib/supabaseClient.js';
 	import SvelteMarkdown from 'svelte-markdown';
+	import { redirect, text } from '@sveltejs/kit';
+    import { goto } from '$app/navigation';
 
-	let source = `  # This is a header
+	let source = "";
 
-This is a paragraph.
-
-* This is a *list*
-* With two **items**
-1. And a ~~sublist~~
-2. That is \`ordered\`
-   * With another
-   * Sublist inside
-
-> and also a quote  
-> by unknown
-
-| And this is | A table | And this is | A table | And this is | A table |
-|-------------|---------|-------------|---------|-------------|---------|
-| With two    | columns | With two    | columns | With two    | columns |
-| With two    | columns | With two    | columns | With two    | columns |
-| With two    | columns | With two    | columns | With two    | columns |
-| With two    | columns | With two    | columns | With two    | columns |
-| With two    | columns | With two    | columns | With two    | columns |
-| With two    | columns | With two    | columns | With two    | columns |
-| With two    | columns | With two    | columns | With two    | columns |
-| With two    | columns | With two    | columns | With two    | columns |
-
-and just  
-some more   
-text  
-to   
-make  
-it  
-overflow  
-\`\`\`  
-function testingCodeblock() {  
-	console.log("testing to add a codeblock");  
-}  
-\`\`\`  
-Thank you for coming to my Ted Talk`;
+	async function submitText(textSource: string) {
+		
+		if(textSource.length > 0) { 
+			const { data, error } = await supabase
+			.from('markdowntable')
+			.insert([
+				{ text: textSource },
+			])
+			.select();
+			
+			if(error) {
+				console.error("supabase error", error);
+			} else {
+				console.log("supabase data", data[0].uuid);
+				goto('/'+data[0].uuid);
+			}
+		}
+	}
 	
 </script>
 
@@ -48,47 +32,24 @@ Thank you for coming to my Ted Talk`;
 	<meta name="description" content="Share your markdown, quick and easy" />
 </svelte:head>
 
-<main>
-	<form>
-		<div class="toolbar">
-			<p>This is a markdown paster for easy and anonymous sharing. After hitting <strong>Share</strong> below you'll get an unique link for your text and <em>anyone</em> with the link will be able to access and share your text.</p>
-		</div>
-		<div class="textBoxWrapper">
-			<p class="description">Input ✏️</p>
-			<p class="description">Output 📋</p>
-			<textarea class="textInput" placeholder="Type your markdown here plz" required spellcheck="true" bind:value={source}></textarea>
-			<section class="textOutput"><SvelteMarkdown {source} /></section>
-		</div>
-		<button on:click={() => console.log("this is a placeholder function")}>Create link & share</button>
-	</form>
-</main>
+<form>
+	<div class="textBoxWrapper">
+		<p class="description">Input ✏️</p>
+		<p class="description">Output 📋</p>
+		<textarea class="textInput" placeholder="Type your markdown here plz" required spellcheck="true" bind:value={source}></textarea>
+		<section class="textOutput"><SvelteMarkdown {source} /></section>
+	</div>
+	<button on:click={() => submitText(source)}>Create link & share</button>
+</form>
 
 <style>
-	main {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		flex: 0.6;
-	}
 
 	form {
 		display: flex;
 		flex-direction: column;
-		/* align-items: stretch; */
-		/* align-content: stretch; */
-		/* justify-content: center;
-		align-content: center; */
 		align-items: center;
 	}
 
-	.toolbar {
-		position: relative;
-		text-align: center;
-		border-radius: 0.25rem;
-		/* border: 1px solid gray; */
-		margin: 1rem 0;
-	}
 	.description {
 		justify-self: start;
 		align-self: end;
@@ -104,11 +65,8 @@ Thank you for coming to my Ted Talk`;
 	}
 
 	.textBoxWrapper {
-		/* align-self: stretch; */
 		width: 80vw;
 		max-width: 100rem;
-		/* display: flex;
-		justify-content: center; */
 		display: grid;
 		grid-template-columns: auto auto;
 	}
@@ -130,19 +88,6 @@ Thank you for coming to my Ted Talk`;
 	.textOutput {
 		border-radius: 0 0.25rem 0.25rem 0;
 		overflow: scroll;
-	}
-	/* .textOutput * {
-		margin: 0.25rem;
-	} */
-
-	button {
-		text-align: center;
-		border-radius: 0.25rem;
-		padding: 0.5rem 1rem;
-		margin: 0.5rem auto;
-		font-weight: bolder;
-		font-size: 1.15rem;
-
 	}
 
 </style>

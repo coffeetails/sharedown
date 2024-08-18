@@ -1,2 +1,5 @@
-Reference for another day: https://daringfireball.net/projects/markdown/basics
-https://www.npmjs.com/package/svelte-markdown
+# ShareDown
+
+Share your markdown text with an unique link, quick and easy.
+
+Made with Sveltekit and Supabase.

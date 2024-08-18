@@ -2,7 +2,7 @@
 	"name": "sharedown",
 	"version": "0.0.1",
 	"scripts": {
-		"dev": "vite dev",
+		"dev": "env-cmd vite dev",
 		"build": "vite build",
 		"preview": "vite preview",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
@@ -27,6 +27,11 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@supabase/auth-ui-shared": "^0.1.8",
+		"@supabase/auth-ui-svelte": "^0.2.9",
+		"@supabase/ssr": "^0.4.0",
+		"@supabase/supabase-js": "^2.45.1",
+		"env-cmd": "^10.1.0",
 		"svelte-markdown": "^0.4.1"
 	}
 }

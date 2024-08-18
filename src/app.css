@@ -107,6 +107,19 @@ code {
 	padding: 0.1rem 0.25rem;
 }
 
+img {
+	max-width: 100%;
+}
+button {
+	text-align: center;
+	border-radius: 0.25rem;
+	padding: 0.5rem 1rem;
+	margin: 0.5rem auto;
+	font-weight: bolder;
+	font-size: 1rem;
+}
+
+
 @media (min-width: 720px) {
 	h1 {
 		font-size: 2.4rem;
