@@ -1,17 +1,19 @@
 <script lang="ts">
     import { goto } from '$app/navigation';
+    import { page } from '$app/stores';
     import SvelteMarkdown from 'svelte-markdown';
 
-	export let data;
-	let markdowntable = data.data[0];
-	let date = new Date(markdowntable.created_at);
+	// export let data;
+	// let markdowntable = data.data[0];
+	// let date = new Date(markdowntable.created_at);
 	
-	console.log(markdowntable);
+	// console.log(markdowntable);
 	
-	let source = markdowntable.text;
+
+	let source = "hi";
 </script>
 
-<p class="description">📋 {date.toDateString()}</p>
+<p class="description">📋 {"date here"}</p>
 <section class="text"><SvelteMarkdown {source} /></section>
 <button on:click={() => goto('/')}>Create new markdown</button>
 

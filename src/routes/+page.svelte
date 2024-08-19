@@ -8,20 +8,25 @@
 
 	async function submitText(textSource: string) {
 		
-		if(textSource.length > 0) { 
-			const { data, error } = await supabase
-			.from('markdowntable')
-			.insert([
-				{ text: textSource },
-			])
-			.select();
-			
-			if(error) {
-				console.error("supabase error", error);
-			} else {
-				console.log("supabase data", data[0].uuid);
-				goto('/'+data[0].uuid);
-			}
+		if(textSource.length > 0) {
+			const blob = new Blob ([textSource], { type: "text/plain" });
+			const formData = new FormData();
+			formData.append("data", blob);
+
+			fetch("http://home.webkonsept.com/84ed8bd7-f8a1-4e4b-bc4d-85868208dae5/", {
+				method: "POST",
+				body: formData,
+			})
+			.then((response) => response.json())
+			.then((json) => {
+				console.log(json);
+				if(json.success) {
+					goto('/' + json.entry);
+				} else {
+					console.log("something went wrong", json);
+				}
+				
+			});
 		}
 	}
 	
