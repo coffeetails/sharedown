@@ -3,17 +3,17 @@
     import { page } from '$app/stores';
     import SvelteMarkdown from 'svelte-markdown';
 
-	// export let data;
+	export let data;
 	// let markdowntable = data.data[0];
 	// let date = new Date(markdowntable.created_at);
 	
-	// console.log(markdowntable);
+	console.log(data.markdownData);
 	
 
-	let source = "hi";
+	let source = "ohai";
 </script>
 
-<p class="description">📋 {"date here"}</p>
+<p class="description">📋 {data.markdownData.status + " " + data.markdownData.statusText}</p>
 <section class="text"><SvelteMarkdown {source} /></section>
 <button on:click={() => goto('/')}>Create new markdown</button>
 

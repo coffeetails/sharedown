@@ -6,23 +6,32 @@ export async function load({ params }) {
     const blob = new Blob ([params.slug], { type: "text/plain" });
 	const formData = new FormData();
 	formData.append("data", blob);
+
 // TODO: fix GET
-	fetch("http://home.webkonsept.com/84ed8bd7-f8a1-4e4b-bc4d-85868208dae5/", {
+	// let { data: markdownData, error } = await fetch("http://home.webkonsept.com/84ed8bd7-f8a1-4e4b-bc4d-85868208dae5/" + params.slug + "/", {
+	let markdownData = await fetch("http://home.webkonsept.com/84ed8bd7-f8a1-4e4b-bc4d-85868208dae5/" + params.slug, {
 		method: "GET",
-		body: formData,
+		// body: formData,
 	})
-	.then((response) => response.json())
-	.then((json) => {
-		console.log(json);
-	});
+	.then((response) => {
+		console.log("response", response);
+		return response;
+	})
+	// .then((json) => {
+	// 	console.log(JSON.stringify(json));
+	// });
 
-    let { data: markdowntable, error } = await supabase
-        .from('markdowntable')
-        .select('uuid,created_at,text')
-        .eq("uuid", params.slug)
+	// vv  Old  vv
+    // let { data: markdowntable, error } = await supabase
+    //     .from('markdowntable')
+    //     .select('uuid,created_at,text')
+    //     .eq("uuid", params.slug)
 
-
+	// console.error(error);
+	console.log(markdownData);
+	
     return {
-    data: markdowntable ?? [],
+    	// data: markdownData ?? [],
+		markdownData
     };
 }
