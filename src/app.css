@@ -62,7 +62,7 @@ li {
 	margin-left: 1.5rem;
 }
 a {
-	color: var(--color-accent);
+	color: var(--color-accent-strong);
 }
 
 table {

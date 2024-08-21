@@ -11,7 +11,6 @@
 			return "Error: unable to fetch date";
 		}
 		let date = new Date(markdownData.date);
-		// let weekdayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 		let weekdayNames = ["Sun", "Mon", "Tues", "Wed", "Thu", "Fri", "Sat", "Sun"];
 		let weekday = weekdayNames[date.getDay()]
 

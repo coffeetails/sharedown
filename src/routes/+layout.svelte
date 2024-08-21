@@ -1,6 +1,8 @@
 <script>
 	import githubImg from '$lib/images/github.svg'
 	import '../app.css';
+
+	export const prerender = true;
 </script>
 
 <div class="app">
