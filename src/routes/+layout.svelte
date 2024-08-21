@@ -22,7 +22,7 @@
 <style>
 	img {
 		position: absolute;
-		top: 0.25rem;
+		bottom: 0.25rem;
 		right: 0.5rem;
 		height: 2rem;
 	}

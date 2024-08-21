@@ -2,7 +2,7 @@
 	"name": "sharedown",
 	"version": "0.0.1",
 	"scripts": {
-		"dev": "env-cmd vite dev",
+		"dev": "vite dev",
 		"build": "vite build",
 		"preview": "vite preview",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",

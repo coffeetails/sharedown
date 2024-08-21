@@ -29,6 +29,7 @@
 		}
 	}
 	
+	let writeMode:boolean = true;
 </script>
 
 
@@ -40,9 +41,9 @@
 
 <form>
 	<div class="textBoxWrapper">
-		<p class="description">Input ✏️</p>
-		<p class="description">Output 📋</p>
-		<textarea class="textInput" placeholder="Type your markdown here plz" required spellcheck="true" bind:value={source}></textarea>
+		<button class="description" id="input" on:click={ () => {writeMode = true} }>Input ✏️</button>
+		<button class="description" id="output" on:click={ () => {writeMode = false} }>Output 📋</button>
+		<textarea class={writeMode ? "textInput writeMode" : "textInput"} placeholder="Type your markdown here plz" required spellcheck="true" bind:value={source}></textarea>
 		<section class="textOutput"><SvelteMarkdown {source} /></section>
 	</div>
 	<button on:click={() => submitText(source)}>Create link & share</button>
@@ -69,6 +70,7 @@
 		background-color: #fafafa;
 		z-index: 10;
 		font-size: 1.15rem;
+		font-weight: normal;
 		box-shadow: var(--shadow-small);
 		border: var(--border-style);
 		background-color: var(--color-accent);
@@ -101,5 +103,45 @@
 		border-radius: 0 0.25rem 0.25rem 0;
 		overflow: scroll;
 	}
+
+	
+@media only screen and (max-width: 700px) {
+	.description {
+		align-self: start;
+		margin-top: -1.5rem;
+
+		background-color: var(--color-accent);
+		user-select: none;
+		cursor: pointer;
+	}
+	#input {
+		justify-self: start;
+		margin-left: 1rem;
+	}
+	#output {
+		justify-self: end;
+		margin-right: 1rem;
+	}
+
+	.textBoxWrapper {
+		width: 80vw;
+		max-width: 100rem;
+		display: grid;
+		grid-template-columns: none;
+		place-items: center;
+	}
+	.textBoxWrapper > * {
+		grid-column: 1 / -1;
+		grid-row: 1 / -1;
+
+	}
+	.textInput, .textOutput {
+		width: 80vw;
+		background-color: #fafafa;
+	}
+	.writeMode {
+		z-index: 8;
+	}
+}
 
 </style>
