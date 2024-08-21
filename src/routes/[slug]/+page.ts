@@ -27,14 +27,14 @@ export async function load({ params }) {
 				reader?.read().then(({ done, value }) => {
 				  // If there is no more data to read
 				  if (done) {
-					console.log("done: ", done);
+					// console.log("done: ", done);
 					controller.close();
 					return;
 				  }
 				  // Get the data and send it to the browser via the controller
 				  controller.enqueue(value);
 				  // Check chunks by logging to the console
-				  console.log("done, value: ", done, value);
+				//   console.log("done, value: ", done, value);
 				  push();
 				});
 			  }
@@ -50,7 +50,7 @@ export async function load({ params }) {
 	)
 	.then((result) => {
 		// Do things with result
-		console.log("result: ",result);
+		// console.log("result: ",result);
 		markdownData.text = result;
 	});
 
