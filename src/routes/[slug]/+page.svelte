@@ -4,16 +4,26 @@
     import SvelteMarkdown from 'svelte-markdown';
 
 	export let data;
-	// let markdowntable = data.data[0];
-	// let date = new Date(markdowntable.created_at);
-	
+	const markdownData = data.markdownData;
 	console.log(data.markdownData);
 	
+	function prepareDate() {
+		if(!markdownData.date) {
+			return "Error: unable to fetch date";
+		}
+		let date = new Date(markdownData.date);
+		// let weekdayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+		let weekdayNames = ["Sun", "Mon", "Tues", "Wed", "Thu", "Fri", "Sat", "Sun"];
+		let weekday = weekdayNames[date.getDay()]
 
-	let source = "ohai";
+		return `${weekday}, ${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`
+	}
+	
+	const displayDate = prepareDate();
+	const source = markdownData.text? markdownData.text : "Error: unable to fetch markdown";
 </script>
 
-<p class="description">📋 {data.markdownData.status + " " + data.markdownData.statusText}</p>
+<p class="description">📋 {displayDate}</p>
 <section class="text"><SvelteMarkdown {source} /></section>
 <button on:click={() => goto('/')}>Create new markdown</button>
 
