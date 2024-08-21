@@ -1,6 +1,5 @@
 <script lang="ts">
     import { goto } from '$app/navigation';
-    import { page } from '$app/stores';
     import SvelteMarkdown from 'svelte-markdown';
 
 	export let data;
@@ -38,6 +37,7 @@
 		resize: horizontal;
 		background-color: #fafafabd;
 		font-family: arial;
+		box-shadow: var(--shadow);
 	}
 
 	.description {
@@ -51,5 +51,8 @@
 		background-color: #fafafa;
 		z-index: 10;
 		font-size: 1.15rem;
+		box-shadow: var(--shadow-small);
+		background-color: var(--color-accent);
+		user-select: none;
 	}
 </style>

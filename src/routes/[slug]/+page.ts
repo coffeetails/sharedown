@@ -1,35 +1,22 @@
 /** @type {import('./$types').PageLoad} */
-import { supabase } from '$lib/supabaseClient';
+import { pile, url } from '$lib/APIdata.js';
 
 export async function load({ params }) {
-
-    // const blob = new Blob ([params.slug], { type: "text/plain" });
-	// const formData = new FormData();
-	// formData.append("data", blob);
-
-// TODO: fix GET
-	// let { data: markdownData, error } = await fetch("http://home.webkonsept.com/84ed8bd7-f8a1-4e4b-bc4d-85868208dae5/" + params.slug + "/", {
 	let markdownData = { date: "", text: ""};
-	await fetch("http://home.webkonsept.com/84ed8bd7-f8a1-4e4b-bc4d-85868208dae5/" + params.slug, {
+	
+	await fetch(url + pile + params.slug, {
 		method: "GET",
-		// body: formData,
 	})
-	// .then((response) => response.body)
 	.then((response) => {
 		console.log(response);
-		
-		// console.log("response.headers", response.headers);
-		// console.log("response.headers.get(\"last-modified\"): ", response.headers.get("last-modified"));
 		let date = response.headers.get("last-modified");
 		if(date != null) {
 			markdownData.date = date;
 		}
 
-		
 		return response.body;
 	})
 	.then((resBod) => {
-		// console.log(response);
 		let reader = resBod?.getReader();
 
 		return new ReadableStream({
@@ -40,14 +27,14 @@ export async function load({ params }) {
 				reader?.read().then(({ done, value }) => {
 				  // If there is no more data to read
 				  if (done) {
-					// console.log("done: ", done);
+					console.log("done: ", done);
 					controller.close();
 					return;
 				  }
 				  // Get the data and send it to the browser via the controller
 				  controller.enqueue(value);
 				  // Check chunks by logging to the console
-				//   console.log("done, value: ", done, value);
+				  console.log("done, value: ", done, value);
 				  push();
 				});
 			  }

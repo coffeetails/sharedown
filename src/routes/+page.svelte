@@ -1,11 +1,10 @@
 <script lang="ts">
-    import { supabase } from '$lib/supabaseClient.js';
 	import SvelteMarkdown from 'svelte-markdown';
-	import { redirect, text } from '@sveltejs/kit';
     import { goto } from '$app/navigation';
+    import { pile, url } from '$lib/APIdata';
 
 	let source = "";
-
+	
 	async function submitText(textSource: string) {
 		
 		if(textSource.length > 0) {
@@ -13,7 +12,7 @@
 			const formData = new FormData();
 			formData.append("data", blob);
 
-			fetch("http://home.webkonsept.com/84ed8bd7-f8a1-4e4b-bc4d-85868208dae5/", {
+			fetch(url + pile, {
 				method: "POST",
 				body: formData,
 			})
@@ -32,10 +31,12 @@
 	
 </script>
 
+
 <svelte:head>
 	<title>ShareDown</title>
 	<meta name="description" content="Share your markdown, quick and easy" />
 </svelte:head>
+
 
 <form>
 	<div class="textBoxWrapper">
@@ -46,6 +47,7 @@
 	</div>
 	<button on:click={() => submitText(source)}>Create link & share</button>
 </form>
+
 
 <style>
 
@@ -67,6 +69,10 @@
 		background-color: #fafafa;
 		z-index: 10;
 		font-size: 1.15rem;
+		box-shadow: var(--shadow-small);
+		border: var(--border-style);
+		background-color: var(--color-accent);
+		user-select: none;
 	}
 
 	.textBoxWrapper {
@@ -81,11 +87,12 @@
 		padding: 1.25rem 0.75rem;
 		width: 40vw;
 		max-width: 50rem;
-		height: 700px;
+		height: 60vh;
 		border: 1px solid gray;
 		resize: horizontal;
 		background-color: #fafafabd;
 		font-family: arial;
+		box-shadow: var(--shadow);
 	}
 	.textInput {
 		border-radius: 0.25rem 0 0 0.25rem;
