@@ -43,10 +43,16 @@
 	<div class="textBoxWrapper">
 		<button class="description" id="input" on:click={ () => {writeMode = true} }>Input ✏️</button>
 		<button class="description" id="output" on:click={ () => {writeMode = false} }>Output 📋</button>
-		<textarea class={writeMode ? "textInput writeMode" : "textInput"} placeholder="Type your markdown here plz" required spellcheck="true" bind:value={source}></textarea>
-		<section class="textOutput"><SvelteMarkdown {source} /></section>
+		<textarea 
+			class={writeMode ? "textInput" : "textInput hidden"} 
+			placeholder="Type your markdown here plz" 
+			required 
+			spellcheck="true" 
+			bind:value={source}
+		></textarea>
+		<section class={writeMode ? "textOutput hidden" : "textOutput"} ><SvelteMarkdown {source} /></section>
 	</div>
-	<button on:click={() => submitText(source)}>Create link & share</button>
+	<button class="submit" on:click={() => submitText(source)}>Create link & share</button>
 </form>
 
 
@@ -106,6 +112,7 @@
 
 	
 @media only screen and (max-width: 700px) {
+
 	.description {
 		align-self: start;
 		margin-top: -1.5rem;
@@ -113,6 +120,8 @@
 		background-color: var(--color-accent);
 		user-select: none;
 		cursor: pointer;
+		position: sticky;
+		top: 1rem;
 	}
 	#input {
 		justify-self: start;
@@ -123,12 +132,20 @@
 		margin-right: 1rem;
 	}
 
+	.submit {
+		flex-shrink: 1;
+		position: absolute;
+		bottom: 0;
+		z-index: 9;
+	}
+
 	.textBoxWrapper {
-		width: 80vw;
+		width: 95vw;
 		max-width: 100rem;
 		display: grid;
 		grid-template-columns: none;
-		place-items: center;
+		/* place-items: center; */
+		align-content: top;
 	}
 	.textBoxWrapper > * {
 		grid-column: 1 / -1;
@@ -136,11 +153,17 @@
 
 	}
 	.textInput, .textOutput {
-		width: 80vw;
+		width: 95vw;
 		background-color: #fafafa;
+		/* height: 100%; */
+		/* height: max-content; */
+		/* height: 65dvh; */
 	}
-	.writeMode {
-		z-index: 8;
+	.hidden {
+		/* display: none; */
+		z-index: -1;
+		opacity: 0;
+		height: 0;
 	}
 }
 
