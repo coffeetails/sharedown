@@ -2,16 +2,15 @@
 	import SvelteMarkdown from 'svelte-markdown';
     import { goto } from '$app/navigation';
     import { pile, url } from '$lib/APIdata';
-
-	let source = "";
 	
+
 	async function submitText(textSource: string) {
 		
 		if(textSource.length > 0) {
 			const blob = new Blob ([textSource], { type: "text/plain" });
 			const formData = new FormData();
 			formData.append("data", blob);
-
+			
 			fetch(url + pile, {
 				method: "POST",
 				body: formData,
@@ -29,7 +28,10 @@
 		}
 	}
 	
+	let source = "";
 	let writeMode:boolean = true;
+	const smallDeviceWidth: number = 700;
+	$: outerWidth = 0;
 </script>
 
 
@@ -38,11 +40,27 @@
 	<meta name="description" content="Share your markdown, quick and easy" />
 </svelte:head>
 
+<svelte:window bind:outerWidth />
+
 
 <form>
 	<div class="textBoxWrapper">
-		<button class="description" id="input" on:click={ () => {writeMode = true} }>Input ✏️</button>
-		<button class="description" id="output" on:click={ () => {writeMode = false} }>Output 📋</button>
+		<button 
+			class={writeMode ? "description disabled" : "description"} 
+			id="input" 
+			on:click={ () => {writeMode = true} } 
+			disabled={writeMode && outerWidth <= smallDeviceWidth}
+		>Input ✏️
+		</button>
+
+		<button 
+			class={writeMode ? "description" : "description disabled"} 
+			id="output" 
+			on:click={ () => {writeMode = false} } 
+			disabled={!writeMode && outerWidth <= smallDeviceWidth}
+		>Output 📋
+		</button>
+
 		<textarea 
 			class={writeMode ? "textInput" : "textInput hidden"} 
 			placeholder="Type your markdown here plz" 
@@ -50,6 +68,7 @@
 			spellcheck="true" 
 			bind:value={source}
 		></textarea>
+
 		<section class={writeMode ? "textOutput hidden" : "textOutput"} ><SvelteMarkdown {source} /></section>
 	</div>
 	<button class="submit" on:click={() => submitText(source)}>Create link & share</button>
@@ -70,8 +89,8 @@
 		margin-bottom: -1rem;
 		margin-left: 1rem;
 
+		position: relative;
 		padding: 0.25rem 0.5rem;
-		border: 1px solid gray;
 		border-radius: 0.25rem;
 		background-color: #fafafa;
 		z-index: 10;
@@ -112,6 +131,15 @@
 
 	
 @media only screen and (max-width: 700px) {
+	
+	:global(.app) {
+		height: 100dvh;
+		overflow: hidden;
+	}
+	:global(body) {
+		height: 100dvh;
+		overflow: hidden;
+	}
 
 	.description {
 		align-self: start;
@@ -122,6 +150,20 @@
 		cursor: pointer;
 		position: sticky;
 		top: 1rem;
+	}
+	.disabled {
+		/* cursor: not-allowed; */
+		cursor: default;
+	}
+	.disabled::after {
+		content: "";
+		position: absolute;
+		top: -1px;
+		bottom: -1px;
+		left: -1px;
+		right: -1px;
+		background-color: #ffffff56;
+		border-radius: 0.25rem;
 	}
 	#input {
 		justify-self: start;

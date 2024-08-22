@@ -78,14 +78,5 @@
 		border-right: var(--border-style);
 		background-color: #fafafa;
 	}
-	@media only screen and (max-width: 700px) {
-		.app {
-			height: 100dvh;
-			overflow: hidden;
-		}
-		:global(body) {
-			height: 100dvh;
-			overflow: hidden;
-		}
-	}
+
 </style>
