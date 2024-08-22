@@ -1,6 +1,9 @@
 <script lang="ts">
     import { goto } from '$app/navigation';
     import SvelteMarkdown from 'svelte-markdown';
+    import { page } from '$app/stores';
+	//@ts-ignore
+	import SvelteCopyUrlButton from 'svelte-copy-url-button';
 
 	export let data;
 	const markdownData = data.markdownData;
@@ -23,7 +26,11 @@
 
 <p class="description">📋 {displayDate}</p>
 <section class="text"><SvelteMarkdown {source} /></section>
-<button on:click={() => goto('/')}>Create new markdown</button>
+
+<div class="buttonWrapper">
+	<button class="buttonStyle" on:click={() => goto('/')}>Create new markdown</button>
+	<SvelteCopyUrlButton class="buttonStyle" defaultText="Copy link" copiedText="Copied!" icon={false} url={$page.url.href} />
+</div>
 
 <style>
 	.text {
@@ -53,5 +60,18 @@
 		box-shadow: var(--shadow-small);
 		background-color: var(--color-accent);
 		user-select: none;
+	}
+
+    .buttonWrapper {
+        margin: 0 auto;
+        margin-top: 2rem;
+        display: flex;
+        flex-wrap: wrap;
+        /* gap: 1rem; */
+        justify-content: center;
+        align-items: center;
+    }
+	.buttonWrapper > * {
+		margin: 0 1rem;
 	}
 </style>

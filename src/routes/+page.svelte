@@ -2,7 +2,7 @@
 	import SvelteMarkdown from 'svelte-markdown';
     import { goto } from '$app/navigation';
     import { pile, url } from '$lib/APIdata';
-	
+    import { page } from '$app/stores';
 
 	async function submitText(textSource: string) {
 		
@@ -27,7 +27,7 @@
 			});
 		}
 	}
-	
+
 	let source = "";
 	let writeMode:boolean = true;
 	const smallDeviceWidth: number = 700;
@@ -46,7 +46,7 @@
 <form>
 	<div class="textBoxWrapper">
 		<button 
-			class={writeMode ? "description disabled" : "description"} 
+			class={writeMode ? "description buttonStyle disabled" : "description buttonStyle"} 
 			id="input" 
 			on:click={ () => {writeMode = true} } 
 			disabled={writeMode && outerWidth <= smallDeviceWidth}
@@ -54,7 +54,7 @@
 		</button>
 
 		<button 
-			class={writeMode ? "description" : "description disabled"} 
+			class={writeMode ? "description buttonStyle" : "description buttonStyle disabled"} 
 			id="output" 
 			on:click={ () => {writeMode = false} } 
 			disabled={!writeMode && outerWidth <= smallDeviceWidth}
@@ -64,14 +64,14 @@
 		<textarea 
 			class={writeMode ? "textInput" : "textInput hidden"} 
 			placeholder="Type your markdown here plz" 
-			required 
 			spellcheck="true" 
 			bind:value={source}
 		></textarea>
 
 		<section class={writeMode ? "textOutput hidden" : "textOutput"} ><SvelteMarkdown {source} /></section>
 	</div>
-	<button class="submit" on:click={() => submitText(source)}>Create link & share</button>
+
+	<button class="submit buttonStyle" on:click={() => submitText(source)}>Create link & share</button>
 </form>
 
 
@@ -100,6 +100,7 @@
 		border: var(--border-style);
 		background-color: var(--color-accent);
 		user-select: none;
+		cursor: default;
 	}
 
 	.textBoxWrapper {

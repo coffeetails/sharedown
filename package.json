@@ -33,6 +33,7 @@
 		"@supabase/ssr": "^0.4.0",
 		"@supabase/supabase-js": "^2.45.1",
 		"env-cmd": "^10.1.0",
+		"svelte-copy-url-button": "^1.0.6",
 		"svelte-markdown": "^0.4.1"
 	}
 }

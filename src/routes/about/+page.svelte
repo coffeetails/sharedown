@@ -1,6 +1,8 @@
 <script lang="ts">
     import { goto } from '$app/navigation';
-
+    import { page } from '$app/stores';
+	//@ts-ignore
+	import SvelteCopyUrlButton from 'svelte-copy-url-button';
 </script>
 
 <section class="text">
@@ -18,8 +20,10 @@
     <p>The frontend is made with SvelteKit by <a href="https://github.com/coffeetails">me</a>.</p>
     <p>The backend, <a href="https://github.com/DemmyDemon/boltpile">Boltpile</a> is made in Go by <a href="https://github.com/DemmyDemon/">Demmy</a>.</p>
 </section>
-<button on:click={() => goto('/')}>Create new markdown</button>
-
+<div class="buttonWrapper">
+	<button class="buttonStyle" on:click={() => goto('/')}>Create new markdown</button>
+	<SvelteCopyUrlButton class="buttonStyle" defaultText="Copy link" copiedText="Copied!" icon={false} url={$page.url.href} />
+</div>
 <style>
 	.text {
 		position: relative;
@@ -32,5 +36,18 @@
 		background-color: #fafafabd;
 		font-family: arial;
 		box-shadow: var(--shadow);
+	}
+
+    .buttonWrapper {
+        margin: 0 auto;
+        margin-top: 2rem;
+        display: flex;
+        flex-wrap: wrap;
+        /* gap: 1rem; */
+        justify-content: center;
+        align-items: center;
+    }
+	.buttonWrapper > * {
+		margin: 0 1rem;
 	}
 </style>

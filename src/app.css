@@ -78,6 +78,7 @@ table {
 	border-radius: 5px;
 	border: 1px solid gray;
 }
+
 td, th {
 	border-left: 1px solid gray;
 }
@@ -94,6 +95,9 @@ td {
 }
 tr:nth-of-type(even) {
 	background-color: var(--color-bg-1);
+}
+tr:nth-of-type(odd) {
+	background-color: #fafafa;
 }
 
 /* a wrapper for code-blocks */
@@ -120,16 +124,18 @@ code {
 img {
 	max-width: 100%;
 }
-button {
+
+.buttonStyle {
 	text-align: center;
 	border-radius: 0.25rem;
 	padding: 0.5rem 2rem;
 	margin: 2rem auto;
+	color: black !important;
 	font-weight: bolder;
-	font-size: 1rem;
+	font-size: 1rem !important;
 	box-shadow: var(--shadow-small);
-	border: var(--border-style);
-	background-color: var(--color-accent);
+	border: var(--border-style) !important;
+	background-color: var(--color-accent) !important;
 }
 button:hover {
 	cursor:pointer;
