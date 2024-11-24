@@ -198,6 +198,7 @@
 	.textInput, .textOutput {
 		width: 95vw;
 		background-color: #fafafa;
+		transition: 0.5s;
 		/* height: 100%; */
 		/* height: max-content; */
 		/* height: 65dvh; */
@@ -206,7 +207,7 @@
 		/* display: none; */
 		z-index: -1;
 		opacity: 0;
-		height: 0;
+		/* height: 0; */
 	}
 }
 
